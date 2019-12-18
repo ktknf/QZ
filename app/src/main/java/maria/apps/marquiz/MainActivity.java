@@ -18,8 +18,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    String[] Answers={"یوسفوند","متروکه","399","دست انداز"};
-
+    String[] Answers={"یوسفوند","گل","399","دست انداز"};
+    int Qnumber=2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,17 +27,23 @@ public class MainActivity extends AppCompatActivity {
 
         final ListView listview = (ListView) findViewById(R.id.listview);
 
-
         Intent myIntent = getIntent();
         String prx = myIntent.getStringExtra("proxies");
 
 
         final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 1; i <= 4; ++i) {
+        for (int i = 1; i <=Qnumber; ++i) {
             list.add("معمای شماره ی "+ i);
         }
         final StableArrayAdapter adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, list);
+
+        Intent i = new Intent(MainActivity.this, QuestionActivity.class);
+        i.putExtra("answer", Answers[0]);
+        i.putExtra("answers", Answers);
+        i.putExtra("count", Qnumber);
+        i.putExtra("id", 0);
+        startActivity(i);
 
         listview.setAdapter(adapter);
 
@@ -50,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent i = new Intent(MainActivity.this, QuestionActivity.class);
                 i.putExtra("answer", Answers[position]);
+                i.putExtra("answers", Answers);
+                i.putExtra("count", Qnumber);
                 i.putExtra("id", position);
                 startActivity(i);
 
@@ -59,10 +67,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
     }
-
-
 
     private class StableArrayAdapter extends ArrayAdapter<String> {
 
